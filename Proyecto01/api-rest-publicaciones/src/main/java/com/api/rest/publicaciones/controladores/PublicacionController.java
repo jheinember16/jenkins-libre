@@ -26,21 +26,14 @@ public class PublicacionController {
         return publicacionRepository.save(publicacion);
     }
 
-    @PutMapping("/publicaciones/{publicacionId}")
-    public Publicacion actualizarPublicacion(@PathVariable Long publicacionId,@Valid @RequestBody Publicacion publicacionRequest) {
-        return publicacionRepository.findById(publicacionId).map(publicacion -> {
-            publicacion.setTitulo(publicacionRequest.getTitulo());
-            publicacion.setDescripcion(publicacionRequest.getDescripcion());
-            publicacion.setContenido(publicacionRequest.getContenido());
-            return publicacionRepository.save(publicacion);
-        }).orElseThrow(() -> new ResourceNotFoundException("Publicacion con el ID : " + publicacionId + " no encontrada"));
+    @GetMapping("/ping-server")
+    public String ping() {
+        return "Probando Servidor activo!";
     }
 
-    @DeleteMapping("/publicaciones/{publicacionId}")
-    public ResponseEntity<?> eliminarPublicacion(@PathVariable Long publicacionId){
-        return publicacionRepository.findById(publicacionId).map(publicacion -> {
-            publicacionRepository.delete(publicacion);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Publicacion con el ID : " + publicacionId + " no encontrada"));
-    }
+
+
+
+
+
 }
