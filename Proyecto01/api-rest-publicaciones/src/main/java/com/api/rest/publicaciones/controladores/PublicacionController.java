@@ -26,9 +26,16 @@ public class PublicacionController {
         return publicacionRepository.save(publicacion);
     }
 
-    @GetMapping("/ping-server")
+    @GetMapping("/ping-servidor")
     public String ping() {
         return "Probando Servidor activo!";
+    }
+
+
+    //Controller 3
+    @GetMapping("/ping-controller")
+    public String ping2() {
+        return "Probando controller 3!";
     }
 
 
