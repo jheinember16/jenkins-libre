@@ -35,6 +35,7 @@ public class PublicacionControllerTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    // Test: listarPublicaciones debe devolver una página con publicaciones
     @Test
     void listarPublicaciones_devuelvePaginaDePublicaciones() {
         Pageable pageable = PageRequest.of(0, 10);
@@ -48,6 +49,7 @@ public class PublicacionControllerTest {
         verify(publicacionRepository, times(1)).findAll(pageable);
     }
 
+    // Test: guardarPublicacion debe retornar la publicación guardada
     @Test
     void guardarPublicacion_devuelvePublicacionGuardada() {
         Publicacion publicacion = new Publicacion();
@@ -61,6 +63,7 @@ public class PublicacionControllerTest {
         verify(publicacionRepository, times(1)).save(publicacion);
     }
 
+    // Test: actualizarPublicacion debe actualizar y devolver la publicación modificada
     @Test
     void actualizarPublicacion_devuelvePublicacionActualizada() {
         Long id = 1L;
@@ -82,6 +85,7 @@ public class PublicacionControllerTest {
         verify(publicacionRepository).save(existente);
     }
 
+    // Test: eliminarPublicacion debe eliminar correctamente si existe
     @Test
     void eliminarPublicacion_eliminaCorrectamente() {
         Long id = 1L;
@@ -94,6 +98,7 @@ public class PublicacionControllerTest {
         verify(publicacionRepository).delete(publicacion);
     }
 
+    // Test: eliminarPublicacion debe lanzar excepción si no existe la publicación
     @Test
     void eliminarPublicacion_lanzaExcepcionSiNoExiste() {
         Long id = 999L;
