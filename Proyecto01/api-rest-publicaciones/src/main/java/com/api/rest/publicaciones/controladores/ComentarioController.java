@@ -33,6 +33,16 @@ public class ComentarioController {
         }).orElseThrow(() -> new ResourceNotFoundException("Publicacion con el ID : " + publicacionId + " no encontrada"));
     }
 
+
+
+    @DeleteMapping("/publicaciones/{publicacionId}/comentarios/{comentarioId}")
+    public ResponseEntity<?> eliminarComentario(@PathVariable(value = "publicacionId") Long publicacionId, @PathVariable(value = "comentarioId") Long comentarioId){
+        return comentarioRepository.findByIdAndPublicacionId(comentarioId, publicacionId).map(comentario -> {
+            comentarioRepository.delete(comentario);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException("Comentario con el ID : " + comentarioId + " no encontrado y publicacion con el ID : " + publicacionId + " no encontrada"));
+    }
+
     @PutMapping("/publicaciones/{publicacionId}/comentarios/{comentarioId}")
     public Comentario actualizarComentario(@PathVariable(value = "publicacionId") Long publicacionId,@PathVariable(value = "comentarioId") Long comentarioId,@Valid @RequestBody Comentario comentarioRequest) {
         if(!publicacionRepository.existsById(publicacionId)) {
@@ -43,13 +53,5 @@ public class ComentarioController {
             comentario.setTexto(comentarioRequest.getTexto());
             return comentarioRepository.save(comentario);
         }).orElseThrow(() -> new ResourceNotFoundException("Comentario con el ID : " + comentarioId + " no encontrado"));
-    }
-
-    @DeleteMapping("/publicaciones/{publicacionId}/comentarios/{comentarioId}")
-    public ResponseEntity<?> eliminarComentario(@PathVariable(value = "publicacionId") Long publicacionId, @PathVariable(value = "comentarioId") Long comentarioId){
-        return comentarioRepository.findByIdAndPublicacionId(comentarioId, publicacionId).map(comentario -> {
-            comentarioRepository.delete(comentario);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Comentario con el ID : " + comentarioId + " no encontrado y publicacion con el ID : " + publicacionId + " no encontrada"));
     }
 }
